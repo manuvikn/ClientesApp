@@ -1,0 +1,47 @@
+<h1 class="mt-4 mb-4">Crear cliente</h1>
+
+<form [formGroup]="clienteForm" (ngSubmit)="createCliente()">
+    <div class="mb-3">
+      <label class="form-label">Nombre</label>
+      <input type="text" class="form-control" [ngClass]="{'is-invalid': clienteForm.get('nombre')?.dirty && clienteForm.get('nombre')?.invalid}" formControlName="nombre">
+      <div *ngIf="clienteForm.get('nombre')?.dirty && clienteForm.get('nombre')?.invalid" class="invalid-feedback">
+        El campo nombre no es válido
+      </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Apellidos</label>
+        <input type="text" class="form-control" [ngClass]="{'is-invalid': clienteForm.get('apellidos')?.dirty && clienteForm.get('apellidos')?.invalid}" formControlName="apellidos">
+        <div *ngIf="clienteForm.get('apellidos')?.dirty && clienteForm.get('apellidos')?.invalid" class="invalid-feedback">El campo apellidos no es válido</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" [ngClass]="{'is-invalid': clienteForm.get('email')?.dirty && clienteForm.get('email')?.invalid}" formControlName="email">
+        <div *ngIf="clienteForm.get('email')?.dirty && clienteForm.get('email')?.invalid" class="invalid-feedback">El campo email no es válido</div>
+    </div>
+
+    <div class="mb-3">
+      <mat-form-field appearance="outline">
+        <mat-label>Región</mat-label>
+        <mat-select formControlName="region">
+          <mat-option *ngFor="let r of regiones" [value]="r.id">
+            {{r.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="mb-3">
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" [ngClass]="{'is-invalid': clienteForm.get('fecha')?.dirty && clienteForm.get('fecha')?.invalid}" formControlName="fecha">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="clienteForm.get('fecha')?.dirty && clienteForm.get('fecha')?.invalid">
+          El campo fecha no es válido
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary" [disabled]="clienteForm.invalid">Enviar</button>
+</form>

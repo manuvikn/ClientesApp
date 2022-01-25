@@ -1,0 +1,22 @@
+<nav *ngIf="pageVisibles" aria-label="Paginación">
+    <ul class="pagination justify-content-center">
+      <li (click)="getAllClientes(0)" class="page-item"
+      [ngClass]="{'disabled pageActive': pageClientes.first}">
+        <span class="page-link">Primera</span>
+      </li>
+      <li class="page-item" (click)="getAllClientes(pageClientes.number - 1)"
+      [ngClass]="{'disabled pageActive': pageClientes.first}">
+        <span class="page-link">Aterior</span>
+      </li>
+      <li *ngFor="let page of pageVisibles" (click)="getAllClientes(page)" class="page-item" 
+      [ngClass]="{'active pageActive': pageClientes.number == page}"><span class="page-link" href="#">{{page + 1}}</span></li>
+      <li class="page-item" (click)="getAllClientes(pageClientes.number + 1)"
+       [ngClass]="{'disabled pageActive': pageClientes.last}">
+        <span class="page-link">Siguiente</span>
+      </li>
+      <li (click)="getAllClientes(pageClientes.totalPages - 1)" class="page-item"
+      [ngClass]="{'disabled pageActive': pageClientes.last}">
+        <span class="page-link">Última</span>
+      </li>
+    </ul>
+  </nav>

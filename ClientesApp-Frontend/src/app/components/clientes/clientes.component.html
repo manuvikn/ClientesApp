@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+  <h1>Clientes</h1>
+  <a class="btn btn-success" routerLink="/clientes/create">Crear</a>
+</div>
+
+<div class="tableContainer">
+  <div *ngIf="loading" class="overlayContainer">
+    <mat-spinner></mat-spinner>
+    <div class="overlay"></div>
+  </div>
+  
+  <table class="table table-success table-striped">
+  
+    <thead>
+      <tr>
+        <th>Foto</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Creación</th>
+        <th>Ajustes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of listClientes">
+        <td>
+          <img *ngIf="c.foto" src="{{'http://localhost:8080/api/clientes/upload/img/' + c.foto}}" class="img-fluid rounded-start" alt="imagen" width="80">
+          <img *ngIf="!c.foto" src="http://localhost:8080/images/no-image.png" class="img-fluid rounded-start" alt="imagen" width="80">
+        </td>
+        <td>{{c.nombre}}</td>
+        <td>{{c.apellidos}}</td>
+        <td>{{c.email}}</td>
+        <td>{{c.fecha | date}}</td>
+        <td>
+          <button (click)="showUpdateModal(c)" class="btn btn-success">Detalle</button>
+          <a [routerLink]="['update/', c.id]" class="btn btn-primary ms-4">Editar</a>
+          <button (click)="deleteCliente(c)" class="btn btn-danger ms-4">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- <div *ngIf="pageVisibles" class="paginatorContainer">
+    
+      <button (click)="getAllClientes(0)" class="btn btn-primary" [disabled]="pageClientes.first"><<</button>  
+      <button (click)="getAllClientes(pageClientes.number - 1)" class="btn btn-primary" [disabled]="pageClientes.first"><</button>  
+      <button *ngFor="let page of pageVisibles" (click)="getAllClientes(page)" class="btn btn-primary" [ngClass]="{'btn-success': pageClientes.number == page}">{{ page + 1 }}</button>  
+      <button (click)="getAllClientes(pageClientes.number + 1)" class="btn btn-primary" [disabled]="pageClientes.last">></button>  
+      <button (click)="getAllClientes(pageClientes.totalPages - 1)" class="btn btn-primary" [disabled]="pageClientes.last">>></button>  
+    
+    </div> -->
+  
+  <paginator #paginator [pageClientes]="pageClientes" (getClientesEvent)="getAllClientes($event)"></paginator>
+
+</div>
+
+<client-detail #clientDetailComponent (uploadImageEvent)="uploadImageEvent($event)"></client-detail>
